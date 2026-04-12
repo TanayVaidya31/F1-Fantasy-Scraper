@@ -182,6 +182,10 @@ def scrape(link):
                 
                 player_team_constructor_names = player_team_card_container.find_elements(By.XPATH, "//div[@class='si-oppositeTeamView__roster-name si-oppositeTeamView__roster-name--constructor']")
                 constructor_names = [cons.text[:3] for cons in player_team_constructor_names]
+                constructor_names = [
+                    "RBR" if name == "Red" else "RBs" if name == "Rac" else name
+                    for name in constructor_names
+                ]
                 # print(f"Constructor names for player {j}: {constructor_names}")
 
                 # Use find_elements to quickly check if element exists (returns empty list instead of exception)
