@@ -190,7 +190,7 @@ def scrape(link):
 
                 # Use find_elements to quickly check if element exists (returns empty list instead of exception)
                 chip_elements = player_team_card_container.find_elements(By.CLASS_NAME, "si-booster__box-text")
-                player_team_chips = chip_elements[0].text if chip_elements else "None"
+                player_team_chips = chip_elements[0].text if chip_elements else ""
                 # print(f"Chip for player {j}: {player_team_chips}")
 
                 # Pad driver and constructor lists to required length
@@ -226,6 +226,32 @@ def scrape(link):
                 writer.writerow(["Rank", "Team", "Name", "Points", "Remaining_Cost_Cap", "Dri1", "Dri2", "Dri3", "Dri4", "Dri5", "Con1", "Con2", "Chips"])
                 writer.writerows(all_players_data)
             # print(f"Saved {len(all_players_data)} players to {csv_path}")
+
+            if i == 0:
+                r0_data = []
+                for row in all_players_data:
+                    r0_data.append([
+                        "0",
+                        row[1],
+                        row[2],
+                        "0",
+                        "100.0",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ])
+                r0_dir = os.path.join(PROJECT_ROOT, "data", "processed", "R0")
+                os.makedirs(r0_dir, exist_ok=True)
+                r0_path = os.path.join(r0_dir, "players.csv")
+                with open(r0_path, 'w', newline='', encoding='utf-8') as f0:
+                    writer0 = csv.writer(f0)
+                    writer0.writerow(["Rank", "Team", "Name", "Points", "Remaining_Cost_Cap", "Dri1", "Dri2", "Dri3", "Dri4", "Dri5", "Con1", "Con2", "Chips"])
+                    writer0.writerows(r0_data)
 
             driver.execute_script("arguments[0].click();", overall_button)
             # print(f"Clicked overall button for grand prix {i}")
