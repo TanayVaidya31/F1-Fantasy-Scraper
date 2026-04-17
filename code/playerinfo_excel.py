@@ -4,8 +4,8 @@ import seaborn as sns
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 processed_dir = os.path.join(PROJECT_ROOT, "data", "processed")
-analysis_dir = os.path.join(PROJECT_ROOT, "analysis")
-os.makedirs(analysis_dir, exist_ok=True)
+confidential_dir = os.path.join(PROJECT_ROOT, "analysis", "confidential_analysis")
+os.makedirs(confidential_dir, exist_ok=True)
 
 # Find all round folders excluding R0
 race_folders = sorted(
@@ -14,7 +14,7 @@ race_folders = sorted(
     reverse=True,
 )
 
-output_path = os.path.join(analysis_dir, "racewise_playerinfo_report.xlsx")
+output_path = os.path.join(confidential_dir, "racewise_playerinfo_report.xlsx")
 
 with pd.ExcelWriter(output_path, engine="xlsxwriter") as writer:
     workbook = writer.book

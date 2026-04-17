@@ -6,6 +6,8 @@ import seaborn as sns
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 processed_dir = os.path.join(PROJECT_ROOT, "data", "processed")
 analysis_dir = os.path.join(PROJECT_ROOT, "analysis")
+confidential_dir = os.path.join(PROJECT_ROOT, "analysis" ,"confidential_analysis")
+os.makedirs(confidential_dir, exist_ok=True)
 os.makedirs(analysis_dir, exist_ok=True)
 
 # Find the latest round folder (highest R number)
@@ -47,7 +49,12 @@ plt.xlabel('Total Cost Cap', fontweight='bold')
 plt.ylabel('Total Points',  fontweight='bold')
 plt.title(f'Points vs Cost Cap - {latest_folder}', fontsize=16, fontweight='bold', pad=20)
 
-output_path = os.path.join(analysis_dir, "costcap_scatter.png")
-plt.savefig(output_path, bbox_inches='tight')
+output_path1 = os.path.join(confidential_dir, "costcap_scatter.png")
+plt.savefig(output_path1, bbox_inches='tight')
+print(f"Scatter plot saved to {output_path1}")
 
-print(f"Scatter plot saved to {output_path}")
+plt.xticks([])  # Set x-ticks to blank to hide them in the public version
+plt.legend([], [])  # Hide legend for public version
+output_path2 = os.path.join(analysis_dir, "costcap_scatter.png")
+plt.savefig(output_path2, bbox_inches='tight')
+print(f"Scatter plot saved to {output_path2}")
