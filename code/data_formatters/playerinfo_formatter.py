@@ -1,8 +1,10 @@
 import os
 import csv
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+CURRENT_DIR = os.path.abspath(__file__)
+PROJECT_ROOT = CURRENT_DIR
+for _ in range(3):  # go up 3 levels
+    PROJECT_ROOT = os.path.dirname(PROJECT_ROOT)
 DATA_PATH = os.path.join(PROJECT_ROOT, "data")
 PROCESSED_PATH = os.path.join(DATA_PATH, "processed")
 

@@ -3,7 +3,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CURRENT_DIR = os.path.abspath(__file__)
+PROJECT_ROOT = CURRENT_DIR
+for _ in range(3):  # go up 3 levels
+    PROJECT_ROOT = os.path.dirname(PROJECT_ROOT)
 processed_dir = os.path.join(PROJECT_ROOT, "data", "processed")
 analysis_dir = os.path.join(PROJECT_ROOT, "analysis")
 confidential_dir = os.path.join(PROJECT_ROOT, "analysis" ,"confidential_analysis")
