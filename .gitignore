@@ -1,3 +1,6 @@
 .env
 analysis/confidential_analysis/racewise_playerinfo_report.xlsx
+analysis/confidential_analysis/racewise_players_report.xlsx
 analysis/confidential_analysis/costcap_scatter.png
+players.csv
+playerinfo.csv
