@@ -6,3 +6,7 @@ players.csv
 playerinfo.csv
 plottly_exp_imgs
 constructor_combos
+analysis/constructor_combos/*
+analysis/plottly_exp_imgs/*
+!analysis/constructor_combos/.gitkeep
+!analysis/plottly_exp_imgs/.gitkeep
