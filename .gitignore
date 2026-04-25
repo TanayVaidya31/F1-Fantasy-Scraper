@@ -5,6 +5,6 @@ analysis/confidential_analysis/costcap_scatter.png
 players.csv
 playerinfo.csv
 analysis/confidential_analysis/combined_con_heatmaps/*
-analysis/confidential_analysisplottable_imgs_exp/*
+analysis/confidential_analysis/plottable_imgs_exp/*
 !analysis/confidential_analysis/combined_con_heatmaps/.gitkeep
-!analysis/confidential_analysisplottable_imgs_exp/.gitkeep
+!analysis/confidential_analysis/plottable_imgs_exp/.gitkeep
