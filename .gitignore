@@ -5,4 +5,4 @@ analysis/confidential_analysis/costcap_scatter.png
 players.csv
 playerinfo.csv
 analysis/constructor_combos/*
-analysis/plottly_exp_imgs/*
+analysis/plottable_exp_imgs/*
