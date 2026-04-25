@@ -50,14 +50,17 @@ for i, row in df.iterrows():
 
 plt.xlabel('Total Cost Cap', fontweight='bold')
 plt.ylabel('Total Points',  fontweight='bold')
-plt.title(f'Points vs Cost Cap - {latest_folder}', fontsize=16, fontweight='bold', pad=20)
+if f'{latest_folder}' == 'R1':
+    plt.title(f'Points vs Cost Cap - {latest_folder}', fontsize=16, fontweight='bold', pad=20)
+else:
+    plt.title(f'Points vs Cost Cap (R1-{latest_folder})', fontsize=16, fontweight='bold', pad=20)
 
 output_path1 = os.path.join(confidential_dir, "costcap_scatter.png")
 plt.savefig(output_path1, bbox_inches='tight')
 print(f"Scatter plot saved to {output_path1}")
 
-plt.xticks([])  # Set x-ticks to blank to hide them in the public version
-plt.legend([], [])  # Hide legend for public version
-output_path2 = os.path.join(analysis_dir, "costcap_scatter.png")
-plt.savefig(output_path2, bbox_inches='tight')
-print(f"Scatter plot saved to {output_path2}")
+# plt.xticks([])  # Set x-ticks to blank to hide them in the public version
+# plt.legend([], [])  # Hide legend for public version
+# output_path2 = os.path.join(analysis_dir, "costcap_scatter.png")
+# plt.savefig(output_path2, bbox_inches='tight')
+# print(f"Scatter plot saved to {output_path2}")

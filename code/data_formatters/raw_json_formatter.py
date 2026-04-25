@@ -26,7 +26,7 @@ def find_raw_files():
 
 
 def build_row_with_empty_price(item):
-    """Build row with empty price column for initial processing"""
+    # Build row with empty price column for initial processing
     points = item.get("ProjectedGamedayPoints", "0")
     try:
         points = str(int(float(points)))
@@ -49,7 +49,7 @@ def write_csv(path, rows):
 
 
 def process_race_for_points(race_num, all_races):
-    """Write name and points data for a race to RN folder"""
+    # Write name and points data for a race to RN folder, but skip price (price will be added in the next pass)
     if race_num not in all_races:
         return
     
@@ -75,7 +75,7 @@ def process_race_for_points(race_num, all_races):
 
 
 def write_price_csv(csv_path, price_map):
-    """Write a CSV file with zero points and price values"""
+    # Write a CSV file with zero points and price values from price_map (used for pre-race folders that are missing the initial points+price CSVs) 
     os.makedirs(os.path.dirname(csv_path), exist_ok=True)
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
@@ -85,7 +85,7 @@ def write_price_csv(csv_path, price_map):
 
 
 def update_csv_with_prices(csv_path, price_map):
-    """Update a CSV file by adding prices in the price column"""
+    # Update a CSV file by adding prices in the price column based on the price_map (used for updating existing CSVs with price data from the next race) 
     if not os.path.exists(csv_path):
         return
     
@@ -110,7 +110,7 @@ def update_csv_with_prices(csv_path, price_map):
 
 
 def update_race_with_price(folder_num, race_num, all_races):
-    """Update R(folder_num) with price data from race_num"""
+    # Update R(folder_num) with price data from race_num
     if race_num not in all_races:
         return
     

@@ -264,8 +264,8 @@ def scrape(link):
         time.sleep(5)
 
     except Exception as e:
-        print(f"Grand prix button not found or clicked: {e}")
+        print(f"Grand prix button not found or error while scraping data (look with head mode if player cards are not updating upon clicking): {e}")
 
-    time.sleep(5)
+    time.sleep(2)
 
 scrape(MAIN_LINK)

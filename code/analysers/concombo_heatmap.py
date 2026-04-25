@@ -11,10 +11,10 @@ for _ in range(3):  # go up 3 levels to reach the root project folder
     PROJECT_ROOT = os.path.dirname(PROJECT_ROOT)
 
 processed_dir = os.path.join(PROJECT_ROOT, 'data', 'processed')
-analysis_dir = os.path.join(PROJECT_ROOT, "analysis")
+concombo_dir = os.path.join(PROJECT_ROOT, 'analysis', 'confidential_analysis', 'constructor_combos')
 
 # Ensure the analysis directory exists
-os.makedirs(analysis_dir, exist_ok=True)
+os.makedirs(concombo_dir, exist_ok=True)
 
 # Find all race folders and filter out R0
 race_folders = [f for f in os.listdir(processed_dir) if f.startswith('R') and f != 'R0']
@@ -82,12 +82,16 @@ for i, con1 in enumerate(active_cons):
         cumul_labels[i, j] = f"{con1}/{con2}\n{c_pts} pts\n{pct:.1f}%"
 
 # 5. VISUALIZE AND SAVE
-plot_configs = [
-    (latest_data, latest_labels, "Latest Race", f"constructor_heatmap_latest_{latest_round}.png"),
-    (cumul_data, cumul_labels, "Cumulative Season", f"constructor_heatmap_cumulative_{latest_round}.png")
-]
-
-# ... (rest of your processing code remains the same)
+if f'{latest_round}' == 'R1':
+    plot_configs = [
+        (latest_data, latest_labels, f"Latest Race ({latest_round})", f"constructor_heatmap_latest_{latest_round}.png"),
+        (cumul_data, cumul_labels, "Cumulative (R1)", f"constructor_heatmap_cumulative_{latest_round}.png")
+    ]
+else:
+    plot_configs = [
+        (latest_data, latest_labels, f"Latest Race ({latest_round})", f"constructor_heatmap_latest_{latest_round}.png"),
+        (cumul_data, cumul_labels, f"Cumulative (R1-{latest_round})", f"constructor_heatmap_cumulative_{latest_round}.png")
+    ]
 
 for data, labels, title_type, filename in plot_configs:
     fig, ax = plt.subplots(figsize=(14, 12))
@@ -111,7 +115,7 @@ for data, labels, title_type, filename in plot_configs:
     
     # Note: Seaborn does not draw annotations for NaN values. This is perfect for "blocking out" the diagonal, as it remains solid black.
     
-    plt.title(f"Constructor Combination Strategy: {title_type}\nPoints (Color) vs Popularity (%)", 
+    plt.title(f"Combined Constructor Points and Pick Rate: {title_type}\nPoints (Color) and Popularity (%)", 
               fontsize=18, pad=20, fontweight='bold')
     plt.xlabel("Constructor A", fontsize=14, fontweight='bold')
     plt.ylabel("Constructor B", fontsize=14, fontweight='bold')
@@ -119,8 +123,8 @@ for data, labels, title_type, filename in plot_configs:
     plt.yticks(rotation=0)
     
     plt.tight_layout()
-    save_path = os.path.join(analysis_dir, filename)
+    save_path = os.path.join(concombo_dir, filename)
     plt.savefig(save_path, dpi=300, bbox_inches='tight', pad_inches=0.05)
     plt.close()
 
-print(f"Heatmaps successfully saved to: {analysis_dir}")
+print(f"Heatmaps successfully saved to: {concombo_dir}")

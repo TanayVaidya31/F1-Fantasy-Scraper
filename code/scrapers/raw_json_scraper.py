@@ -17,7 +17,6 @@ os.makedirs(PATH, exist_ok=True)
 print(f"Output directory: {PATH}")
 
 def scrape_all():
-    """Scrape all race data from scratch."""
     # Find the maximum race number with data (up to 30)
     max_race = 0
     for i in range(1, 31):
@@ -53,7 +52,6 @@ def scrape_all():
             print(f"Error saving race {i}: {e}")
 
 def update():
-    """Update by fetching only new race data and renumbering existing files."""
     # Find existing max_saved
     files = [f for f in os.listdir(PATH) if f.startswith("race_") and f.endswith(".json")]
     max_saved = max((int(f.split('_')[1].split('.')[0]) for f in files), default=0)
@@ -103,5 +101,5 @@ def update():
 
 # Run update by default for optimization
 if __name__ == "__main__":
-    #scrape_all()  # Use this to scrape from scratch
-    update()
+    scrape_all()  # Use this to scrape from scratch
+    # update() # Use this to only fetch new data since last scrape
