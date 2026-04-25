@@ -12,7 +12,7 @@ for _ in range(3):
     PROJECT_ROOT = os.path.dirname(PROJECT_ROOT)
 
 processed_dir = os.path.join(PROJECT_ROOT, "data", "processed")
-output_dir = os.path.join(PROJECT_ROOT, "analysis", "confidential_analysis", "plottly_exp_imgs")
+output_dir = os.path.join(PROJECT_ROOT, "analysis", "confidential_analysis", "plottable_exp_imgs")
 os.makedirs(output_dir, exist_ok=True)
 
 race_folders = sorted(
