@@ -11,7 +11,7 @@ for _ in range(3):  # go up 3 levels to reach the root project folder
     PROJECT_ROOT = os.path.dirname(PROJECT_ROOT)
 
 processed_dir = os.path.join(PROJECT_ROOT, 'data', 'processed')
-concombo_dir = os.path.join(PROJECT_ROOT, 'analysis', 'confidential_analysis', 'constructor_combos')
+concombo_dir = os.path.join(PROJECT_ROOT, 'analysis', 'confidential_analysis', 'combined_con_heatmaps')
 
 # Ensure the analysis directory exists
 os.makedirs(concombo_dir, exist_ok=True)
