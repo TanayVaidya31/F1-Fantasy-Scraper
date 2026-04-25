@@ -4,5 +4,5 @@ analysis/confidential_analysis/racewise_players_report.xlsx
 analysis/confidential_analysis/costcap_scatter.png
 players.csv
 playerinfo.csv
-analysis/constructor_combos
-analysis/plottable_exp_imgs
+analysis/combined_con_heatmaps
+analysis/plottable_imgs_exp
