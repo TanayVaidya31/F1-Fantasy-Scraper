@@ -19,7 +19,7 @@ race_folders.sort()
 dfs = []
 
 for folder in race_folders:
-    file_path = os.path.join(processed_dir, folder, 'constructors.csv')
+    file_path = os.path.join(processed_dir, folder, 'drivers.csv')
     df = pd.read_csv(file_path)
     df['Race'] = folder
     dfs.append(df)
@@ -69,18 +69,44 @@ low_df  = race_points_df[race_points_df['Name'].isin(low_value_names)]
 
 # ------------------ COLORS ------------------
 color_map = {
-    'MER': '#00D2BE',
-    'RBR': '#0600EF',
-    'FER': '#DC0000',
-    'MCL': '#FF8700',
-    'AST': "#006F21",
-    'ALP': '#bd39b5',
-    'AUD': '#bcbcbc',
-    'CAD': '#1E1E1E',
-    'HAA': '#6a6a6a',
-    'WIL': '#30587d',
-    'RBS': '#89a6ee',
+    'RUS': '#00D2BE',   # Mercedes teal
+    'VER': '#0600EF',   # Red Bull blue
+    'LEC': '#DC0000',   # Ferrari red
+    'NOR': '#FF8700',   # McLaren orange
+    'ALO': "#006F21",   # Aston Martin green
+    'GAS': '#bd39b5',   # Alpine magenta
+    'HUL': '#bcbcbc',   # Audi light gray
+    'PER': '#1E1E1E',   # Cadillac dark gray
+    'BEA': '#6a6a6a',   # Haas gray
+    'SAI': '#30587d',   # Williams blue
+    'LAW': '#89a6ee',   # Racing Bulls light blue
+
+    'ANT': '#00D2BE',   # Mercedes teal
+    'HAD': '#0600EF',   # Red Bull blue
+    'HAM': '#DC0000',   # Ferrari red
+    'PIA': '#FF8700',   # McLaren orange
+    'STR': "#006F21",   # Aston Martin green
+    'COL': '#bd39b5',   # Alpine magenta
+    'BOR': '#bcbcbc',   # Audi light gray
+    'BOT': '#1E1E1E',   # Cadillac dark gray
+    'OCO': '#6a6a6a',   # Haas gray
+    'ALB': '#30587d',   # Williams blue
+    'LIN': '#89a6ee',   # Racing Bulls light blue
 }
+driver_style = {
+    'RUS': '',        'ANT': (4, 2),
+    'VER': '',        'HAD': (4, 2),
+    'LEC': '',        'HAM': (4, 2),
+    'NOR': '',        'PIA': (4, 2),
+    'ALO': '',        'STR': (4, 2),
+    'GAS': '',        'COL': (4, 2),
+    'HUL': '',        'BOR': (4, 2),
+    'PER': '',        'BOT': (4, 2),
+    'BEA': '',        'OCO': (4, 2),
+    'SAI': '',        'ALB': (4, 2),
+    'LAW': '',        'LIN': (4, 2),
+}
+set(race_points_df['Name']).issubset(driver_style.keys())
 
 analysis_dir = os.path.join(PROJECT_ROOT, 'analysis')
 os.makedirs(analysis_dir, exist_ok=True)
@@ -94,7 +120,10 @@ def plot_graph(data, title, filename):
         x='RaceNumber',
         y='Price',
         hue='Name',
+        style='Name',                # enables line styles
+        dashes=driver_style,
         palette=color_map
+        # marker='o'
     )
 
     ax = plt.gca()
@@ -148,7 +177,7 @@ def plot_graph(data, title, filename):
                     f'{y:.1f}',
                     (x, y),
                     textcoords="offset points",
-                    xytext=(0, 3),   # move 5 pixels up
+                    xytext=(0, 4),   # move 5 pixels up
                     ha='center',
                     fontsize=7
                 )
@@ -164,12 +193,12 @@ def plot_graph(data, title, filename):
 # ------------------ PLOT BOTH ------------------
 plot_graph(
     high_df,
-    'Premium Constructors (≥ 18.5M$)',
-    'prem_constructors.png'
+    'Premium Drivers (≥ 18.5M$)',
+    'prem_drivers.png'
 )
 
 plot_graph(
     low_df,
-    'Non-Premium Constructors (< 18.5M$)',
-    'nonprem_constructors.png'
+    'Non-Premium Drivers (< 18.5M$)',
+    'nonprem_drivers.png'
 )
