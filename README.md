@@ -23,6 +23,7 @@ Designed to be modular and extensible — you can run individual components (scr
 
 ## Project Structure
 
+```
 F1-Fantasy-Scraper/
 │
 ├── code/
@@ -40,6 +41,7 @@ F1-Fantasy-Scraper/
 ├── .env.example               # Environment template
 ├── requirements.txt
 └── README.md
+```
 
 ---
 
@@ -67,9 +69,7 @@ Each round contains:
   - Transfers used
   - Chip usage history  
 
----
-
-### Baseline (`R0`)
+### 🧱 Baseline (`R0`)
 A synthetic pre-season state:
 - Uses pre race pricing
 - Initializes players with appropriate points and cost caps
