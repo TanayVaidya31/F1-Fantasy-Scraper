@@ -1,4 +1,4 @@
-# 🏎️ F1 Fantasy Lab
+# F1 Fantasy Lab
 
 A data pipeline and analysis toolkit for **F1 Fantasy**.  
 This project pulls official F1 Fantasy data, optionally scrapes private league data, structures everything into clean datasets, and generates reports and visualizations for analysis.
@@ -7,50 +7,49 @@ Designed to be modular and extensible — you can run individual components (scr
 
 ---
 
-## 🚀 Features
+## Features
 
 - 📥 Automated ingestion of official F1 Fantasy data (JSON feeds)
 - 🔐 Optional scraping of **private league data** (Selenium-based)
 - 🧹 Structured data pipeline (raw → processed)
-- 📄 Export-ready Excel reports
-- 📈 Visualizations using Matplotlib, Seaborn, and Plottable
-- 📊 Multiple analysis modules:
+- 📊 Multiple analysis modules (Visualisations):
   - Player Performance trends & strategy insights
   - Driver & Constructor Points & Price comparisons
   - Player Budget & Cost Cap analysis
   - Private League Rank, Transfers used and chips distribution trends
+  - Export-ready Excel reports
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 F1-Fantasy-Scraper/
 │
 ├── code/
-│ ├── scrapers/ # Data collection (JSON + league scraping)
-│ ├── data_formatters/ # Data cleaning & transformation
-│ └── analysers/ # Visualizations & analysis
+│   ├── scrapers/              # Data ingestion (JSON + league scraping)
+│   ├── data_formatters/       # Data cleaning & transformation
+│   └── analysers/             # Visualizations & analysis
 │
 ├── data/
-│ ├── raw/ # Raw JSON data
-│ └── processed/ # Structured per-race datasets (R0, R1, ...)
+│   ├── raw/                   # Raw JSON data
+│   └── processed/             # Structured per-race datasets (R0, R1, ...)
 │
-├── analysis/ # Generated plots
-│ └── confidential_analysis/ # Private league-specific outputs
+├── analysis/                  # Generated plots
+│   └── confidential_analysis/ # League-specific outputs
 │
-├── .env.example # Environment template
+├── .env.example               # Environment template
 ├── requirements.txt
 └── README.md
 
 ---
 
-## 🔄 Pipeline Overview
+## Pipeline Overview
 
-Raw JSON → Formatter → Processed CSVs → Player Aggregation → Analysis → Visuals / Reports
+Scrapers -> Raw JSON → Formatter → Processed CSVs → Player Aggregation → Analysis → Visuals / Reports
 
 ---
 
-## 🧠 Data Model
+## Data Model
 
 ### 📊 Race Folders (`R1`, `R2`, ...)
 Each round contains:
@@ -70,7 +69,7 @@ Each round contains:
 
 ---
 
-### 🧱 Baseline (`R0`)
+### Baseline (`R0`)
 A synthetic pre-season state:
 - Uses pre race pricing
 - Initializes players with appropriate points and cost caps
@@ -78,7 +77,7 @@ A synthetic pre-season state:
 
 ---
 
-## ⚙️ Setup
+## Setup
 
 ### 1. Clone the repository
 
@@ -104,7 +103,7 @@ F1_FANTASY_PRIVATE_LEAGUE_URL=your_league_url
 
 ---
 
-## ▶️ Usage
+## Usage
 
 Run the pipeline step-by-step:
 
@@ -119,7 +118,7 @@ python code/data_formatters/playerinfo_excel.py
 
 ---
 
-## 📊 Analysis Modules
+## Analysis Modules
 
 - Drivers, Constructors and Players Points Performance Analysis
 - League Rank distribution trends
@@ -135,7 +134,7 @@ python code/data_formatters/playerinfo_excel.py
 
 ---
 
-## 🛠️ Future Improvements
+## Future Improvements
 
 - 🔮 Predictive Modeling:
   - Points and price prediction models
@@ -163,7 +162,7 @@ python code/data_formatters/playerinfo_excel.py
 
 ---
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 This project is for educational and analytical purposes.
 Scraping and automated login may violate F1 Fantasy terms of service.
@@ -171,7 +170,7 @@ Use responsibly and avoid sharing sensitive credentials.
 
 ---
 
-## 🧩 Notes
+## Notes
 
 Scraper selectors may break if the F1 Fantasy UI changes
 Chrome version mismatches can affect Selenium
@@ -179,7 +178,7 @@ Raw data is preserved to allow reprocessing without re-scraping
 
 ---
 
-## ⭐ Contributing
+## Contributing
 
 Contributions are welcome.
 If you find bugs or have ideas for improvements, feel free to open an issue or submit a pull request.
