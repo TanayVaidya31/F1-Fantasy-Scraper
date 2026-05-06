@@ -73,6 +73,13 @@ def process_round(n):
     if 'RAC' in price_dict:
         price_dict['RBS'] = price_dict['RAC']
     
+    prev_prev_players_path = os.path.join(PROCESSED_PATH, f"R{n-2}", "players.csv")
+    prev_prev_players = (
+        load_csv_as_dict(prev_prev_players_path, 'Team')
+        if n > 2 and os.path.exists(prev_prev_players_path)
+        else {}
+    )
+
     output = []
     for p in players:
         team = p['Team']
@@ -100,20 +107,74 @@ def process_round(n):
         con_prices = sum(price_dict.get(c.upper(), 0) for c in con_list)
         total_cost_cap = remaining + dri_prices + con_prices
         
-        swaps_made = 0
-        if n > 1 and prev_p:
-            current_drivers = {p[f'Dri{i}'] for i in range(1, 6)}
-            prev_drivers = {prev_p.get(f'Dri{i}', '') for i in range(1, 6)}
-            driver_changes = len(current_drivers - prev_drivers)
+        # swaps_made = 0
+        # if n > 1 and prev_p:
+        #     current_drivers = {p[f'Dri{i}'] for i in range(1, 6)}
+        #     prev_drivers = {prev_p.get(f'Dri{i}', '') for i in range(1, 6)}
+        #     driver_changes = len(current_drivers - prev_drivers)
             
-            current_con = {p[f'Con{i}'] for i in range(1, 3)}
-            prev_con = {prev_p.get(f'Con{i}', '') for i in range(1, 3)}
-            con_changes = len(current_con - prev_con)
+        #     current_con = {p[f'Con{i}'] for i in range(1, 3)}
+        #     prev_con = {prev_p.get(f'Con{i}', '') for i in range(1, 3)}
+        #     con_changes = len(current_con - prev_con)
             
-            swaps_made = driver_changes + con_changes
+        #     swaps_made = driver_changes + con_changes
         
+        # prev_swaps_rem = int(float(prev_i.get('Swaps_Rem', '2')))
+        # swaps_rem = 2 if n <= 1 else min(3, prev_swaps_rem + 2)
+
+        # ---------- SWAP LOGIC ----------
+        # Detect chips
+        chip_str = p.get('Chips', '')
+        limitless_used = 'Limitless' in chip_str
+        wildcard_used = 'Wildcard' in chip_str
+
+        # Detect if previous round used Limitless
+        prev_chip_str = prev_p.get('Chips', '')
+        prev_was_limitless = 'Limitless' in prev_chip_str
+
+        # Select base team for comparison
+        base_team = None
+
+        if n > 1:
+            if prev_was_limitless:
+                # Compare with R(n-2)
+                prev_prev_p = prev_prev_players.get(team, {})
+                base_team = prev_prev_p
+            else:
+                # Normal case: compare with R(n-1)
+                base_team = prev_p
+
+        # ----- Compute swaps made (position-wise) -----
+        swaps_made = 0
+
+        if base_team:
+            driver_changes = sum(
+                1 for i in range(1, 6)
+                if p.get(f'Dri{i}', '') != base_team.get(f'Dri{i}', '')
+            )
+
+            constructor_changes = sum(
+                1 for i in range(1, 3)
+                if p.get(f'Con{i}', '') != base_team.get(f'Con{i}', '')
+            )
+
+            swaps_made = driver_changes + constructor_changes
+
+        # ----- Compute swaps remaining -----
         prev_swaps_rem = int(float(prev_i.get('Swaps_Rem', '2')))
-        swaps_rem = 2 if n <= 1 else min(3, prev_swaps_rem + 2)
+
+        if n <= 1:
+            swaps_rem = 2
+
+        elif limitless_used or wildcard_used:
+            # Reset after chip usage
+            swaps_rem = 2
+
+        else:
+            swaps_rem = max(
+                2,
+                min(3, prev_swaps_rem + 2 - swaps_made)
+            )
         
         chips = {'LL': '', '3X': '', 'NN': '', 'WC': '', 'AP': '', 'FF': ''}
         chip_str = p.get('Chips', '')
