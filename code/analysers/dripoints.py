@@ -112,7 +112,7 @@ sns.lineplot(
     marker='o'
 )
 
-plt.title('Constructor Points Per Race (R1 - R{folder})', fontsize=16, fontweight='bold', pad=20)
+plt.title(f'Driver Points Per Race', fontsize=16, fontweight='bold', pad=20)
 plt.xlabel('Race Number', fontsize=12, fontweight='bold')
 plt.ylabel('Points per Race', fontsize=12, fontweight='bold')
 plt.xticks(race_numbers)
