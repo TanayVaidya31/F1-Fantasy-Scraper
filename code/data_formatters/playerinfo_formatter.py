@@ -223,7 +223,7 @@ def process_round(n):
         writer.writeheader()
         writer.writerows(output)
 
-def main():
+def player_formatter():
     rounds = get_rounds()
     create_r0_if_needed()
     if 0 not in rounds:
@@ -234,4 +234,4 @@ def main():
         process_round(n)
 
 if __name__ == '__main__':
-    main()
+    player_formatter()

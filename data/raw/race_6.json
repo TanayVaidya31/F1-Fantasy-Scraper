@@ -2181,9 +2181,9 @@
             }
         ],
         "FeedTime": {
-            "UTCTime": "5/30/2026 8:38:36 AM",
-            "ISTTime": "5/30/2026 2:08:36 PM",
-            "CESTTime": "5/30/2026 10:38:36 AM"
+            "UTCTime": "5/30/2026 2:37:59 PM",
+            "ISTTime": "5/30/2026 8:07:59 PM",
+            "CESTTime": "5/30/2026 4:37:59 PM"
         }
     },
     "Meta": {
@@ -2191,9 +2191,9 @@
         "RetVal": 1,
         "Success": true,
         "Timestamp": {
-            "UTCTime": "5/30/2026 8:38:36 AM",
-            "ISTTime": "5/30/2026 2:08:36 PM",
-            "CESTTime": "5/30/2026 10:38:36 AM"
+            "UTCTime": "5/30/2026 2:37:59 PM",
+            "ISTTime": "5/30/2026 8:07:59 PM",
+            "CESTTime": "5/30/2026 4:37:59 PM"
         },
         "StatusCode": 200,
         "Maintenance": ""

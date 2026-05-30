@@ -148,7 +148,7 @@ def update_race_with_price(folder_num, race_num, all_races):
         update_csv_with_prices(constructors_csv, constructor_price_map)
 
 
-def format_all():
+def format_all_raw():
     os.makedirs(PROCESSED_PATH, exist_ok=True)
     raw_files = find_raw_files()
     if not raw_files:
@@ -181,4 +181,4 @@ def format_all():
 
 
 if __name__ == "__main__":
-    format_all()
+    format_all_raw()
