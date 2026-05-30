@@ -21,23 +21,23 @@ from analysers.swaps import team_swaps_horizontal_bargraph
 
 
 if __name__ == "__main__":
-    # # Step 1: Scrape raw JSON data (only new data if update=True)
-    # scrape_all_raw()  # Use this to scrape from scratch, or update_raw() to only fetch new data
-    # # update_raw()  # Use this to only fetch new data since last scrape  
+    # Step 1: Scrape raw JSON data (only new data if update=True)
+    scrape_all_raw()  # Use this to scrape from scratch, or update_raw() to only fetch new data
+    # update_raw()  # Use this to only fetch new data since last scrape  
 
-    # # Step 2: Scrape player data (only new data if update=True)
-    # # player_scrape_main(update=False)  # Set update=True to only scrape new grand prix data, or False to scrape all data from the beginning
-    # player_scrape_main(update=True)  # Set update=True to only scrape new grand prix data, or False to scrape all data from the beginning
+    # Step 2: Scrape player data (only new data if update=True)
+    # player_scrape_main(update=False)  # Set update=True to only scrape new grand prix data, or False to scrape all data from the beginning
+    player_scrape_main(update=True)  # Set update=True to only scrape new grand prix data, or False to scrape all data from the beginning
 
-    # # Step 3: Format raw JSON into processed CSVs
-    # format_all_raw() 
+    # Step 3: Format raw JSON into processed CSVs
+    format_all_raw() 
 
-    # # Step 4: Format playerinfo CSVs for Excel output
-    # player_formatter()
+    # Step 4: Format playerinfo CSVs for Excel output
+    player_formatter()
 
-    # # Step 5: Format players CSVs for Excel output
-    # player_excel_report()  # Generate the players Excel report after formatting
-    # playerinfo_excel_report()  # Generate the playerinfo Excel report after formatting
+    # Step 5: Format players CSVs for Excel output
+    player_excel_report()  # Generate the players Excel report after formatting
+    playerinfo_excel_report()  # Generate the playerinfo Excel report after formatting
 
     # Step 6: Run analysers to generate visualizations
     constructor_combo_heatmap()
