@@ -207,6 +207,15 @@ def scrape_players_data(driver, wait, update):
                 player_team_chips = chip_elements[0].text if chip_elements else ""
                 # print(f"Chip for player {j}: {player_team_chips}")
 
+                if(player_team_chips == 'Final Fix'):
+                    # print(f"\nPlayer {j} in grand prix {i} has Final Fix chip, different flow to find replaced driver")
+                    replaced_driver_parent_element = player_team_card_container.find_element(By.XPATH, "//i[@class='f1i-final-fix']/ancestor::div[@class='si-oppositeTeamView__roster-item  ']")
+                    player_team_driver_names = replaced_driver_parent_element.find_elements(By.CLASS_NAME, "si-oppositeTeamView__roster-name-last")
+                    replacedwith_driver_name = player_team_driver_names[0].text[:3]
+                    print(f"Replaced driver with Final Fix for player {j}: {replacedwith_driver_name}")
+                    driver_names[5] += f" <- {replacedwith_driver_name}"  # Add replaced driver as 6th driver in the list (DriFixedOut)
+                    print(f"Updated 6th driver name for player {j} in grand prix {i}: {driver_names[5]}")
+
                 # Pad driver and constructor lists to required length
                 while len(driver_names) < 5:
                     driver_names.append("")
@@ -227,7 +236,8 @@ def scrape_players_data(driver, wait, update):
                     driver_names[4],
                     constructor_names[0],
                     constructor_names[1],
-                    player_team_chips
+                    player_team_chips,
+                    driver_names[5] if len(driver_names) > 5 else ""
                 ]
                 all_players_data.append(row_data)
 
@@ -237,7 +247,7 @@ def scrape_players_data(driver, wait, update):
             csv_path = os.path.join(race_dir, "players.csv")
             with open(csv_path, 'w', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
-                writer.writerow(["Rank", "Team", "Name", "Points", "Remaining_Cost_Cap", "Dri1", "Dri2", "Dri3", "Dri4", "Dri5", "Con1", "Con2", "Chips"])
+                writer.writerow(["Rank", "Team", "Name", "Points", "Remaining_Cost_Cap", "Dri1", "Dri2", "Dri3", "Dri4", "Dri5", "Con1", "Con2", "Chips", "DriFixedOut"])
                 writer.writerows(all_players_data)
             # print(f"Saved {len(all_players_data)} players to {csv_path}")
 
@@ -257,6 +267,7 @@ def scrape_players_data(driver, wait, update):
                         "",
                         "",
                         "",
+                        "",
                         ""
                     ])
                 r0_dir = os.path.join(PROJECT_ROOT, "data", "processed", "R0")
@@ -264,7 +275,7 @@ def scrape_players_data(driver, wait, update):
                 r0_path = os.path.join(r0_dir, "players.csv")
                 with open(r0_path, 'w', newline='', encoding='utf-8') as f0:
                     writer0 = csv.writer(f0)
-                    writer0.writerow(["Rank", "Team", "Name", "Points", "Remaining_Cost_Cap", "Dri1", "Dri2", "Dri3", "Dri4", "Dri5", "Con1", "Con2", "Chips"])
+                    writer0.writerow(["Rank", "Team", "Name", "Points", "Remaining_Cost_Cap", "Dri1", "Dri2", "Dri3", "Dri4", "Dri5", "Con1", "Con2", "Chips", "DriFixedOut"])
                     writer0.writerows(r0_data)
 
             overall_button(wait)

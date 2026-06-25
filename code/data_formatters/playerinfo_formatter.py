@@ -80,6 +80,22 @@ def process_round(n):
         else {}
     )
 
+    # Load previous round's prices for Final Fix cost cap adjustment
+    prev_drivers_path = os.path.join(prev_dir, "drivers.csv")
+    prev_constructors_path = os.path.join(prev_dir, "constructors.csv")
+    prev_drivers = load_csv_as_dict(prev_drivers_path, 'Name') if os.path.exists(prev_drivers_path) else {}
+    prev_constructors = load_csv_as_dict(prev_constructors_path, 'Name') if os.path.exists(prev_constructors_path) else {}
+
+    prev_price_dict = {}
+    for d in prev_drivers.values():
+        prev_price_dict[d['Name'].upper()] = float(d['Price'])
+    for c in prev_constructors.values():
+        prev_price_dict[c['Name'].upper()] = float(c['Price'])
+    if 'RED' in prev_price_dict:
+        prev_price_dict['RBR'] = prev_price_dict['RED']
+    if 'RAC' in prev_price_dict:
+        prev_price_dict['RBS'] = prev_price_dict['RAC']
+
     output = []
     for p in players:
         team = p['Team']
@@ -92,6 +108,9 @@ def process_round(n):
         
         # Check if Limitless was used this round
         limitless_used = 'Limitless' in p.get('Chips', '')
+
+        # Check if Final Fix was used this round
+        final_fix_used = 'Final Fix' in p.get('Chips', '')
         
         # Determine teams to use for cost calculation
         if limitless_used:
@@ -99,13 +118,27 @@ def process_round(n):
             dri_list = [prev_p.get(f'Dri{i}', '') for i in range(1, 6)]
             con_list = [prev_p.get(f'Con{i}', '') for i in range(1, 3)]
         else:
-            # Use current round's team
+            # Use current round's team (also correct base for Final Fix before adjustment)
             dri_list = [p[f'Dri{i}'] for i in range(1, 6)]
             con_list = [p[f'Con{i}'] for i in range(1, 3)]
         
         dri_prices = sum(price_dict.get(d.upper(), 0) for d in dri_list)
         con_prices = sum(price_dict.get(c.upper(), 0) for c in con_list)
         total_cost_cap = remaining + dri_prices + con_prices
+
+        # Final Fix cost cap adjustment:
+        # players.csv stores the post-fix team (Nor in Dri slots), but the original
+        # driver (Pia) was the one on the team during the race. We correct for the
+        # price changes of both drivers between the previous and current round:
+        #   + (Pia_curr - Pia_prev)  — Pia's price movement still affects the cap
+        #   - (Nor_curr - Nor_prev)  — Nor's price movement must be undone
+        if final_fix_used and p.get('DriFixedOut', ''):
+            original_driver, replaced_driver = [x.strip() for x in p['DriFixedOut'].split('<-')]
+            orig_curr = price_dict.get(original_driver.upper(), 0)
+            orig_prev = prev_price_dict.get(original_driver.upper(), 0)
+            repl_curr = price_dict.get(replaced_driver.upper(), 0)
+            repl_prev = prev_price_dict.get(replaced_driver.upper(), 0)
+            total_cost_cap += (orig_curr - orig_prev) - (repl_curr - repl_prev)
         
         # swaps_made = 0
         # if n > 1 and prev_p:
@@ -128,9 +161,10 @@ def process_round(n):
         limitless_used = 'Limitless' in chip_str
         wildcard_used = 'Wildcard' in chip_str
 
-        # Detect if previous round used Limitless
+        # Detect chips from previous round
         prev_chip_str = prev_p.get('Chips', '')
         prev_was_limitless = 'Limitless' in prev_chip_str
+        prev_was_final_fix = 'Final Fix' in prev_chip_str
 
         # Select base team for comparison
         base_team = None
@@ -144,19 +178,46 @@ def process_round(n):
                 # Normal case: compare with R(n-1)
                 base_team = prev_p
 
-        # ----- Compute swaps made (position-wise) -----
+        # ----- Compute swaps made (set-based, position-independent) -----
         swaps_made = 0
 
         if base_team:
-            driver_changes = sum(
-                1 for i in range(1, 6)
-                if p.get(f'Dri{i}', '') != base_team.get(f'Dri{i}', '')
-            )
+            current_drivers = {
+                p.get(f'Dri{i}', '').strip()
+                for i in range(1, 6)
+            }
+            previous_drivers = {
+                base_team.get(f'Dri{i}', '').strip()
+                for i in range(1, 6)
+            }
 
-            constructor_changes = sum(
-                1 for i in range(1, 3)
-                if p.get(f'Con{i}', '') != base_team.get(f'Con{i}', '')
-            )
+            # Current round used Final Fix: players.csv has Nor (replacement) in Dri slots,
+            # but the pre-fix team (with Pia) is what we compare against the previous team.
+            if final_fix_used and p.get('DriFixedOut', ''):
+                orig, repl = [x.strip() for x in p['DriFixedOut'].split('<-')]
+                if repl in current_drivers:
+                    current_drivers.discard(repl)
+                    current_drivers.add(orig)
+
+            # Previous round used Final Fix: base_team's players.csv also has Nor in Dri slots,
+            # but again the pre-fix team (with Pia) is the meaningful comparison baseline.
+            if prev_was_final_fix and base_team.get('DriFixedOut', ''):
+                orig, repl = [x.strip() for x in base_team['DriFixedOut'].split('<-')]
+                if repl in previous_drivers:
+                    previous_drivers.discard(repl)
+                    previous_drivers.add(orig)
+
+            current_constructors = {
+                p.get(f'Con{i}', '').strip()
+                for i in range(1, 3)
+            }
+            previous_constructors = {
+                base_team.get(f'Con{i}', '').strip()
+                for i in range(1, 3)
+            }
+
+            driver_changes = len(current_drivers - previous_drivers)
+            constructor_changes = len(current_constructors - previous_constructors)
 
             swaps_made = driver_changes + constructor_changes
 

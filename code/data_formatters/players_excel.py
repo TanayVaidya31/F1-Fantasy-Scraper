@@ -40,6 +40,7 @@ def player_excel_report():
         wild_chip_format = workbook.add_format({"bg_color": "#DE6060", "align": "center"})
         auto_chip_format = workbook.add_format({"bg_color": "#5EDACD", "align": "center"})
         final_chip_format = workbook.add_format({"bg_color": "#DCAB62", "align": "center"})
+        final_driver_format = workbook.add_format({"bg_color": "#DFCEB1", "align": "center"})
 
         for folder in race_folders:
             file_path = os.path.join(processed_dir, folder, "players.csv")
@@ -60,7 +61,8 @@ def player_excel_report():
                 'Dri5': 'Driver #5',
                 'Con1': 'Constructor #1',
                 'Con2': 'Constructor #2',
-                'Chips': 'Chips Used'
+                'Chips': 'Chips Used',
+                'DriFixedOut': 'Fixed Drivers'
             })
 
             sheet_name = f"Race {int(folder.lstrip('R'))}"
@@ -81,6 +83,7 @@ def player_excel_report():
             worksheet.set_column(6, 10, 12)  # Other Drivers
             worksheet.set_column(11, 12, 14)  # Constructors
             worksheet.set_column(12, 12, 12)  # Chips
+            worksheet.set_column(13, 13, 14)  # FFed Drivers
 
             # Apply formatting row by row
             for row_idx in range(len(df)):
@@ -139,6 +142,12 @@ def player_excel_report():
                         worksheet.write(row_idx + 1, df.columns.get_loc("Chips Used"), chip_used, final_chip_format)
                     else:
                         worksheet.write(row_idx + 1, df.columns.get_loc("Chips Used"), chip_used)
+
+                drivers_fixed = df.at[row_idx, "Fixed Drivers"]
+                if pd.notna(drivers_fixed) and str(drivers_fixed).strip():
+                    worksheet.write(row_idx + 1, df.columns.get_loc("Fixed Drivers"), drivers_fixed, final_driver_format)
+                else:
+                    continue
 
             # Conditional formatting for points using a seaborn green continuous palette
             viridis_colors = sns.color_palette("Blues", 3).as_hex()
