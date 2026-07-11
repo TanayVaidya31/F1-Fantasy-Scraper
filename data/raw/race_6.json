@@ -29,7 +29,7 @@
                 "HighestChampFinishCount": 0,
                 "FastestPitstopAwardCount": 0,
                 "QualifyingPoints": "2",
-                "RacePoints": "10",
+                "RacePoints": "23",
                 "SprintPoints": "",
                 "NoNegativePoints": "25.00",
                 "F1PlayerId": "8",
@@ -45,7 +45,7 @@
                     {
                         "sessionnumber": 2,
                         "sessiontype": "Race",
-                        "points": 10,
+                        "points": 23,
                         "nonegative_points": 23
                     }
                 ],
@@ -887,7 +887,7 @@
                 "HighestChampFinishCount": 0,
                 "FastestPitstopAwardCount": 0,
                 "QualifyingPoints": "4",
-                "RacePoints": "15",
+                "RacePoints": "12",
                 "SprintPoints": "",
                 "NoNegativePoints": "16.00",
                 "F1PlayerId": "982",
@@ -903,7 +903,7 @@
                     {
                         "sessionnumber": 2,
                         "sessiontype": "Race",
-                        "points": 15,
+                        "points": 12,
                         "nonegative_points": 12
                     }
                 ],
@@ -1085,7 +1085,7 @@
                 "HighestChampFinishCount": 0,
                 "FastestPitstopAwardCount": 0,
                 "QualifyingPoints": "1",
-                "RacePoints": "15",
+                "RacePoints": "12",
                 "SprintPoints": "",
                 "NoNegativePoints": "13.00",
                 "F1PlayerId": "14",
@@ -1101,7 +1101,7 @@
                     {
                         "sessionnumber": 2,
                         "sessiontype": "Race",
-                        "points": 15,
+                        "points": 12,
                         "nonegative_points": 12
                     }
                 ],
@@ -1151,7 +1151,7 @@
                 "HighestChampFinishCount": 0,
                 "FastestPitstopAwardCount": 0,
                 "QualifyingPoints": "0",
-                "RacePoints": "21",
+                "RacePoints": "18",
                 "SprintPoints": "",
                 "NoNegativePoints": "18.00",
                 "F1PlayerId": "1149",
@@ -1167,7 +1167,7 @@
                     {
                         "sessionnumber": 2,
                         "sessiontype": "Race",
-                        "points": 21,
+                        "points": 18,
                         "nonegative_points": 18
                     }
                 ],
@@ -1283,7 +1283,7 @@
                 "HighestChampFinishCount": 0,
                 "FastestPitstopAwardCount": 0,
                 "QualifyingPoints": "6",
-                "RacePoints": "17",
+                "RacePoints": "13",
                 "SprintPoints": "",
                 "NoNegativePoints": "19.00",
                 "F1PlayerId": "1032",
@@ -1299,7 +1299,7 @@
                     {
                         "sessionnumber": 2,
                         "sessiontype": "Race",
-                        "points": 17,
+                        "points": 13,
                         "nonegative_points": 13
                     }
                 ],
@@ -1547,7 +1547,7 @@
                 "HighestChampFinishCount": 0,
                 "FastestPitstopAwardCount": 0,
                 "QualifyingPoints": "25",
-                "RacePoints": "-3",
+                "RacePoints": "-7",
                 "SprintPoints": "",
                 "NoNegativePoints": "38.00",
                 "F1PlayerId": "9",
@@ -1563,7 +1563,7 @@
                     {
                         "sessionnumber": 2,
                         "sessiontype": "Race",
-                        "points": -3,
+                        "points": -7,
                         "nonegative_points": 13
                     }
                 ],
@@ -1613,7 +1613,7 @@
                 "HighestChampFinishCount": 0,
                 "FastestPitstopAwardCount": 0,
                 "QualifyingPoints": "17",
-                "RacePoints": "0",
+                "RacePoints": "-3",
                 "SprintPoints": "",
                 "NoNegativePoints": "34.00",
                 "F1PlayerId": "7",
@@ -1629,7 +1629,7 @@
                     {
                         "sessionnumber": 2,
                         "sessiontype": "Race",
-                        "points": 0,
+                        "points": -3,
                         "nonegative_points": 17
                     }
                 ],
@@ -1745,7 +1745,7 @@
                 "HighestChampFinishCount": 0,
                 "FastestPitstopAwardCount": 0,
                 "QualifyingPoints": "7",
-                "RacePoints": "10",
+                "RacePoints": "23",
                 "SprintPoints": "",
                 "NoNegativePoints": "30.00",
                 "F1PlayerId": "3",
@@ -1761,7 +1761,7 @@
                     {
                         "sessionnumber": 2,
                         "sessiontype": "Race",
-                        "points": 10,
+                        "points": 23,
                         "nonegative_points": 23
                     }
                 ],
@@ -1943,7 +1943,7 @@
                 "HighestChampFinishCount": 0,
                 "FastestPitstopAwardCount": 0,
                 "QualifyingPoints": "6",
-                "RacePoints": "36",
+                "RacePoints": "30",
                 "SprintPoints": "",
                 "NoNegativePoints": "36.00",
                 "F1PlayerId": "636",
@@ -1959,7 +1959,7 @@
                     {
                         "sessionnumber": 2,
                         "sessiontype": "Race",
-                        "points": 36,
+                        "points": 30,
                         "nonegative_points": 30
                     }
                 ],
@@ -2181,9 +2181,9 @@
             }
         ],
         "FeedTime": {
-            "UTCTime": "6/19/2026 2:06:41 PM",
-            "ISTTime": "6/19/2026 7:36:41 PM",
-            "CESTTime": "6/19/2026 4:06:41 PM"
+            "UTCTime": "6/24/2026 11:19:57 AM",
+            "ISTTime": "6/24/2026 4:49:57 PM",
+            "CESTTime": "6/24/2026 1:19:57 PM"
         }
     },
     "Meta": {
@@ -2191,11 +2191,11 @@
         "RetVal": 1,
         "Success": true,
         "Timestamp": {
-            "UTCTime": "6/19/2026 2:06:41 PM",
-            "ISTTime": "6/19/2026 7:36:41 PM",
-            "CESTTime": "6/19/2026 4:06:41 PM"
+            "UTCTime": "6/24/2026 11:19:57 AM",
+            "ISTTime": "6/24/2026 4:49:57 PM",
+            "CESTTime": "6/24/2026 1:19:57 PM"
         },
         "StatusCode": 200,
-        "Maintenance": ""
+        "Maintenance": "0"
     }
 }
