@@ -26,8 +26,8 @@ if __name__ == "__main__":
     # update_raw()  # Use this to only fetch new data since last scrape  
 
     # Step 2: Scrape player data (only new data if update=True)
-    # player_scrape_main(update=False)  # Set update=True to only scrape new grand prix data, or False to scrape all data from the beginning
-    player_scrape_main(update=True)  # Set update=True to only scrape new grand prix data, or False to scrape all data from the beginning
+    #player_scrape_main(update=False, startcount=0)  # Set update=True to only scrape new grand prix data, or False to scrape all data from the beginning
+    player_scrape_main(update=True, startcount=0)  # Set update=True to only scrape new grand prix data, or False to scrape all data from the beginning
 
     # Step 3: Format raw JSON into processed CSVs
     format_all_raw() 

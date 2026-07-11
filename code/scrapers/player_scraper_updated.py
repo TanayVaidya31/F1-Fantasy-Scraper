@@ -1,3 +1,4 @@
+import traceback
 import selenium
 import time
 from selenium import webdriver
@@ -64,6 +65,16 @@ def click_cookies(driver, wait):
     except Exception as e:
         print(f"Cookies button not found or clickable: {e}")
 
+def click_cancel_league(wait):
+    try:
+        cancel_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Cancel']")))
+        print("Found cancel button")
+        cancel_button.click()
+        print("Clicked cancel button")
+        time.sleep(2)
+    except Exception as e:
+        print(f"Cancel button not found or clickable: {e}")
+
 def login(wait):
     try:
         signin_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='SIGN IN']")))
@@ -115,11 +126,11 @@ def player_card_check(player_team, player_team_card_container, j, i, count):
     # print(f"Team name from card container for player {j}: {player_team_card_container_nametest}")
     if count and player_team_card_container_nametest != player_team:
         # print(f"Team name mismatch for player {j} in grand prix {i}: expected {player_team}, found {player_team_card_container_nametest}")
-        time.sleep(1)
-        player_card_check(player_team, player_team_card_container, j, i, count-1)  # Recursive call to check again after waiting
+        time.sleep(2)
+        # player_card_check(player_team, player_team_card_container, j, i, count-1)  # Recursive call to check again after waiting
         # print(f"Rechecked team name for player {j} in grand prix {i}: found {player_team_card_container_nametest}")
 
-def scrape_players_data(driver, wait, update):
+def scrape_players_data(driver, wait, update, startcount):
     try:    
         overall_button(wait)
         gp_buttons = wait.until(EC.element_to_be_clickable((By.XPATH, "//li[@class='si-select__option ']")))
@@ -152,7 +163,12 @@ def scrape_players_data(driver, wait, update):
 
         gp_count = len(gp_buttons)
         print(f"Found {gp_count} grand prix buttons")
-        for i in range(max_saved, gp_count):
+
+        initialstartcount = startcount  # Store the initial startcount for later comparison
+        
+        for i in range(max_saved + startcount, gp_count):
+            startcount += 1
+            # print(f"\nScraping grand prix {i} (startcount={startcount})")
             gp_buttons = wait.until(EC.element_to_be_clickable((By.XPATH, "//li[@class='si-select__option ']")))
             gp_buttons = driver.find_elements(By.XPATH, "//li[@class='si-select__option ']")
             driver.execute_script("arguments[0].click();", gp_buttons[i])
@@ -281,6 +297,13 @@ def scrape_players_data(driver, wait, update):
             overall_button(wait)
             # print(f"Clicked overall button for grand prix {i}")
             time.sleep(3)
+            print(f"Finished scraping grand prix {i} (startcount={startcount})")
+            if startcount - initialstartcount == 5 and startcount < gp_count:
+                print(f"Scraped {5+initialstartcount} grand prix, restarting from {startcount}th round to avoid detection")
+                # print(f"Initial startcount: {initialstartcount}, Current startcount: {startcount}, Grand prix count: {gp_count}")
+                driver.quit()
+                time.sleep(1)
+                return player_scrape_main(update, startcount)  # Recursive call to continue scraping from the next grand prix
 
         # print("Clicked all grand prix button")
         time.sleep(5)
@@ -290,13 +313,15 @@ def scrape_players_data(driver, wait, update):
 
     time.sleep(2)
 
-def player_scrape_main(update):
+def player_scrape_main(update, startcount):
+    # print(f"ENTER player_scrape_main startcount={startcount}")
     driver = init_driver()
     driver.get(MAIN_LINK)
     wait = WebDriverWait(driver, 10)
     driver.maximize_window()
     time.sleep(5)
     click_cookies(driver, wait)
+    click_cancel_league(wait)
     try:
         login(wait)
     except Exception as e:
@@ -312,8 +337,9 @@ def player_scrape_main(update):
     driver.get(PRIVATE_LEAGUE_URL)
     # print("Navigated to league")
     time.sleep(1)
-    scrape_players_data(driver, wait, update)
+    scrape_players_data(driver, wait, update, startcount)
     driver.quit()
+    # print(f"EXIT player_scrape_main startcount={startcount}")
 
 if __name__ == "__main__":
-    player_scrape_main(update=False)  # Set update=True to only scrape new grand prix data, or False to scrape all data from the beginning
+    player_scrape_main(update=False, startcount=0)  # Set update=True to only scrape new grand prix data, or False to scrape all data from the beginning
